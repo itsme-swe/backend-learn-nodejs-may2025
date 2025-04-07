@@ -2,6 +2,8 @@ function add(a, b) {
   return a + b;
 }
 
-module.exports = { add };
+const msg = "Hello World";
 
-//◽ Exporting "math.js" module by using commonJs feature
+module.exports = { msg, add };
+
+//◽ Exporting "add()" function and "msg" variable by using commonJs feature "module.exports"
