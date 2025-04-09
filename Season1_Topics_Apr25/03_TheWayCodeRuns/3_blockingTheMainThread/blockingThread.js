@@ -11,6 +11,7 @@ crypto.pbkdf2Sync("password", "salt", 5000000, 50, "sha512");
 
 console.log("First key generated");
 
+//◽ Async Task
 crypto.pbkdf2("password", "salt", 500000, 50, "sha512", (err, key) => {
   console.log("Second key generated");
 });
