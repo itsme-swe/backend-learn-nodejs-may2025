@@ -32,4 +32,6 @@ First key generated
 600
 the value of c is:  600
 Second key generated
+
+💥 Best practice is never use synchronous functions.
 */
