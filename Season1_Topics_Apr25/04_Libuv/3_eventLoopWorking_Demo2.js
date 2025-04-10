@@ -6,9 +6,8 @@ setImmediate(() => {
   console.log("Set Immediate");
 });
 
-Promise.resolve((res, rej) => {
+Promise.resolve(() => {
   console.log("Promise");
-  res();
 }).then(() => {
   console.log("Promise resolved");
 });
