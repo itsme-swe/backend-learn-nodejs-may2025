@@ -1,5 +1,5 @@
 /*
-💥 This is how we connect monogoDB to our server. We need to create URI and assigning connection string of mongodb to URI variable.
+💥 This is how we connect monogoDB to our server. We need to create URI and assigning connection string of mongodb to URL variable.
 */
 
 const { MongoClient } = require("mongodb"); //◽ This is how we connect node app with mongodb
