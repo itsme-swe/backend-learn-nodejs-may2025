@@ -36,6 +36,9 @@ async function main() {
 
   console.log("Inserted documents:", insertResult);
 
+  const countUsers = await collection.countDocuments({});
+  console.log("The number of users in db are ", countUsers);
+
   return "done.";
 }
 
