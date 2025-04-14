@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/dev", (req, res) => {
-  res.send("I am SDE Harsh.");
+  res.send("I am SWE Harsh.");
 });
 
 app.listen(PORT, () => {
