@@ -8,12 +8,20 @@ const app = express();
 
 const PORT = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Welcome to my world");
-});
-
 app.get("/dev", (req, res) => {
   res.send("I am SWE Harsh.");
+});
+
+app.get("/user", (req, res) => {
+  res.send({ firstname: "Juhu", lastname: "Chellani", city: "Ajmer" });
+});
+
+app.post("/user", (req, res) => {
+  res.send("Data Successfully saved to DB.");
+});
+
+app.delete("/user", (req, res) => {
+  res.send("User deleted successfully");
 });
 
 app.listen(PORT, () => {
