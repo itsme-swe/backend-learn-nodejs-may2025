@@ -4,6 +4,10 @@
 
 const express = require("express");
 
+const { adminAuth } = require("./middlewares/auth");
+
+require("./config/database");
+
 const app = express();
 
 const PORT = 3000;
@@ -52,6 +56,17 @@ app.get(
     res.send("2nd Handler responding");
   }
 );
+
+//💥 Writing Middleware for all GET, POST, DELETE,.... requests
+app.use("/admin", adminAuth);
+
+app.get("/admin/getAllData", (req, res) => {
+  res.send("All Data sent");
+});
+
+app.delete("/admin/deleteUser", (req, res) => {
+  res.send("Deleted a user");
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening at port ${PORT}.`);
