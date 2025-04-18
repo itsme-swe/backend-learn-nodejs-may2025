@@ -84,9 +84,9 @@ connectDB()
 app.post("/signup", async (req, res) => {
   // Creating new instance of the User model
   const user = new User({
-    firstName: "Juhu",
-    lastName: "Chellani",
-    emailId: "juhi123@xyz",
+    firstName: "John",
+    lastName: "Sinha",
+    emailId: "abs123@xyz",
     password: "abc123",
     age: 30,
     gender: "Female",
