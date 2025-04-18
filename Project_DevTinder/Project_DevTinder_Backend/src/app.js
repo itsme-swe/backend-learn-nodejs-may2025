@@ -6,11 +6,21 @@ const express = require("express");
 
 const { adminAuth } = require("./middlewares/auth");
 
-require("./config/database");
+const { connectDB } = require("./config/database");
 
 const app = express();
-
 const PORT = 3000;
+
+connectDB()
+  .then(() => {
+    console.log("Database connection established...");
+    app.listen(PORT, () => {
+      console.log(`Server is listening at port ${PORT}.`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database cannot be connected");
+  });
 
 //◽ Accessing query parametrs
 app.get("/dev", (req, res) => {
@@ -66,8 +76,4 @@ app.get("/admin/getAllData", (req, res) => {
 
 app.delete("/admin/deleteUser", (req, res) => {
   res.send("Deleted a user");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is listening at port ${PORT}.`);
 });
