@@ -82,6 +82,7 @@ connectDB()
 // });
 
 app.post("/signup", async (req, res) => {
+  // Creating new instance of the User model
   const user = new User({
     firstName: "Juhu",
     lastName: "Chellani",
