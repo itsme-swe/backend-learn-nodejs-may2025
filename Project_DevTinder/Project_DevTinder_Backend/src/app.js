@@ -121,13 +121,18 @@ app.get("/feed", async (req, res) => {
   }
 });
 
-// app.get("/user/one", async (req, res) => {
-//   const userEmail = req.body.emailId;
+app.get("/user/one", async (req, res) => {
+  const userEmail = req.body.emailId;
 
-//   try {
-//     const user = await Users.findOne({ emailId: userEmail });
-//     res.send(user);
-//   } catch (error) {
-//     res.status(404).send("User not found");
-//   }
-// });
+  try {
+    const user = await Users.findOne({ emailId: userEmail });
+
+    if (!user) {
+      res.status(404).send("Single user not found");
+    } else {
+      res.send(user);
+    }
+  } catch (error) {
+    res.status(404).send("User not found");
+  }
+});
