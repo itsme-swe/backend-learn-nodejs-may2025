@@ -8,7 +8,7 @@ const { adminAuth } = require("./middlewares/auth");
 
 const connectDB = require("./config/database");
 
-const User = require("./models/user");
+const Users = require("./models/user");
 
 const app = express();
 const PORT = 3000;
@@ -81,16 +81,12 @@ app.delete("/admin/deleteUser", (req, res) => {
   res.send("Deleted a user");
 });
 
+// ▶ Enables Express to handle JSON request bodies
+app.use(express.json());
+
 app.post("/signup", async (req, res) => {
   // Creating new instance of the User model
-  const user = new User({
-    firstName: "John",
-    lastName: "Sinha",
-    emailId: "abs123@xyz",
-    password: "abc123",
-    age: 30,
-    gender: "Female",
-  });
+  const user = new Users(req.body);
 
   try {
     await user.save();
@@ -99,3 +95,39 @@ app.post("/signup", async (req, res) => {
     res.status(400).send("Error saving the user:" + err.message);
   }
 });
+
+app.get("/user", async (req, res) => {
+  const userEmail = req.body.emailId;
+
+  try {
+    const user = await Users.find({ emailId: userEmail });
+
+    if (user.length === 0) {
+      res.status(404).send("User not found");
+    } else {
+      res.send(user);
+    }
+  } catch (err) {
+    res.status(400).send("Something went wrong" + err.message);
+  }
+});
+
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await Users.find({});
+    res.send(users);
+  } catch (error) {
+    res.status(400).send("Something went wrong");
+  }
+});
+
+// app.get("/user/one", async (req, res) => {
+//   const userEmail = req.body.emailId;
+
+//   try {
+//     const user = await Users.findOne({ emailId: userEmail });
+//     res.send(user);
+//   } catch (error) {
+//     res.status(404).send("User not found");
+//   }
+// });
