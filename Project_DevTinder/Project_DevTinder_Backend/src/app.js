@@ -8,12 +8,13 @@ const { adminAuth } = require("./middlewares/auth");
 
 const connectDB = require("./config/database");
 
-const Users = require("./models/user");
+const User = require("./models/user");
 
 const app = express();
+
 const PORT = 3000;
 
-//◽ Connecting our app to DB
+//💥 Connecting our app to DB
 connectDB()
   .then(() => {
     console.log("Database connection established...");
@@ -25,7 +26,7 @@ connectDB()
     console.error("Database cannot be connected");
   });
 
-//◽ Accessing query parametrs
+//💥 Accessing query parametrs
 app.get("/dev", (req, res) => {
   const query = req.query.username;
   const pass = req.query.pass;
@@ -33,31 +34,31 @@ app.get("/dev", (req, res) => {
   res.send(`Searching for: ${query} and ${pass}`);
 });
 
-//◽ Route parameters
-app.get("/user/:userId/:password", (req, res) => {
-  const userId = req.params.userId;
-  const pass = req.params.password;
+//💥 Route parameters
+// app.get("/user/:userId/:password", (req, res) => {
+//   const userId = req.params.userId;
+//   const pass = req.params.password;
 
-  console.log(userId);
-  console.log(pass);
+//   console.log(userId);
+//   console.log(pass);
 
-  res.send(`UserId is ${userId} and password is ${pass}`);
-});
+//   res.send(`UserId is ${userId} and password is ${pass}`);
+// });
 
-app.post("/user", (req, res) => {
-  res.send("Data Successfully saved to DB.");
-});
+// app.post("/user", (req, res) => {
+//   res.send("Data Successfully saved to DB.");
+// });
 
-app.delete("/user", (req, res) => {
-  res.send("User deleted successfully");
-});
+// app.delete("/user", (req, res) => {
+//   res.send("User deleted successfully");
+// });
 
-//◽ Using regex
+//💥 Using regex
 app.get(/\/ab?cd/, (req, res) => {
   res.send("ab?cd");
 });
 
-//◽ Multiple route handler
+//💥 Multiple route handler
 app.get(
   "/car",
   (req, res, next) => {
@@ -86,7 +87,7 @@ app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   // Creating new instance of the User model
-  const user = new Users(req.body);
+  const user = new User(req.body);
 
   try {
     await user.save();
@@ -100,7 +101,7 @@ app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;
 
   try {
-    const user = await Users.find({ emailId: userEmail });
+    const user = await User.find({ emailId: userEmail });
 
     if (user.length === 0) {
       res.status(404).send("User not found");
@@ -114,7 +115,7 @@ app.get("/user", async (req, res) => {
 
 app.get("/feed", async (req, res) => {
   try {
-    const users = await Users.find({});
+    const users = await User.find({});
     res.send(users);
   } catch (error) {
     res.status(400).send("Something went wrong");
@@ -125,7 +126,7 @@ app.get("/user/one", async (req, res) => {
   const userEmail = req.body.emailId;
 
   try {
-    const user = await Users.findOne({ emailId: userEmail });
+    const user = await User.findOne({ emailId: userEmail });
 
     if (!user) {
       res.status(404).send("Single user not found");
@@ -134,5 +135,21 @@ app.get("/user/one", async (req, res) => {
     }
   } catch (error) {
     res.status(404).send("User not found");
+  }
+});
+
+app.delete("/user", async (req, res) => {
+  const userId = req.body.userId;
+
+  try {
+    const user = await User.findByIdAndDelete(userId);
+
+    if (!user) {
+      res.status(400).send("User not found");
+    } else {
+      res.send("User deleted successfully", user);
+    }
+  } catch (error) {
+    res.status(400).send("Something went wrong");
   }
 });
