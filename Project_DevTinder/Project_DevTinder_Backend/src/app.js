@@ -157,3 +157,22 @@ app.delete("/user", async (req, res) => {
     res.status(400).send("Something went wrong");
   }
 });
+
+//💥 API will update the document in DB
+app.patch("/user", async (req, res) => {
+  const userId = req.body.userId;
+
+  const data = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, data, {
+      returnDocument: "before",
+    });
+
+    console.log(user);
+
+    res.send("User updated successfully");
+  } catch (err) {
+    res.status(400).send("Error");
+  }
+});
