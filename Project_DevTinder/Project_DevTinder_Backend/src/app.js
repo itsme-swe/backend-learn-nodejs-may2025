@@ -97,6 +97,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+//💥 API will retrieve the user from DB on the basis of emailId
 app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;
 
@@ -113,6 +114,7 @@ app.get("/user", async (req, res) => {
   }
 });
 
+//💥 API will return all the users from DB
 app.get("/feed", async (req, res) => {
   try {
     const users = await User.find({});
@@ -122,6 +124,7 @@ app.get("/feed", async (req, res) => {
   }
 });
 
+//💥 If duplicate documents present API will return the first document
 app.get("/user/one", async (req, res) => {
   const userEmail = req.body.emailId;
 
@@ -138,6 +141,7 @@ app.get("/user/one", async (req, res) => {
   }
 });
 
+//💥 Delete user by Id API
 app.delete("/user", async (req, res) => {
   const userId = req.body.userId;
 
