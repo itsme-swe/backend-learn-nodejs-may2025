@@ -159,19 +159,37 @@ app.delete("/user", async (req, res) => {
 });
 
 //💥 API will update the document in DB
-app.patch("/user", async (req, res) => {
-  const userId = req.body.userId;
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
 
   const data = req.body;
 
+  const ALLOWED_UPDATES = ["age", "gender", "bio", "skills"];
+
+  const updateData = {};
+
+  for (const key of ALLOWED_UPDATES) {
+    if (data[key] !== undefined) {
+      updateData[key] = data[key];
+    }
+  }
+
   try {
-    const user = await User.findByIdAndUpdate(userId, data, {
-      returnDocument: "before",
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+
+    if (!isUpdateAllowed) {
+      throw new Error("Update not allowed");
+    }
+
+    const user = await User.findByIdAndUpdate(userId, updateData, {
+      returnDocument: "after",
       runValidators: true,
     });
     console.log(user);
     res.send("User updated successfully");
   } catch (err) {
-    res.status(400).send("Something went wrong..." + err.message);
+    res.status(400).send({ message: err.message });
   }
 });
