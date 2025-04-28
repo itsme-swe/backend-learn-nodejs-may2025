@@ -8,6 +8,8 @@ const { adminAuth } = require("./middlewares/auth");
 
 const connectDB = require("./config/database");
 
+const validator = require("validator");
+
 const User = require("./models/user");
 
 const app = express();
@@ -181,6 +183,10 @@ app.patch("/user/:userId", async (req, res) => {
 
     if (!isUpdateAllowed) {
       throw new Error("Update not allowed");
+    }
+
+    if (data?.skills.length > 4) {
+      throw new Error("Skills cannot exceed more than 4...");
     }
 
     const user = await User.findByIdAndUpdate(userId, updateData, {
