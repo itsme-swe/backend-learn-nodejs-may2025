@@ -91,6 +91,7 @@ app.delete("/admin/deleteUser", (req, res) => {
 //💥 Enables Express to handle JSON request bodies
 app.use(express.json());
 
+//💥 Regestiering new User
 app.post("/signup", async (req, res) => {
   try {
     validateSignUpData(req);
