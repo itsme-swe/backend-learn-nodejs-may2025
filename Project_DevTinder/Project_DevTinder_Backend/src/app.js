@@ -88,7 +88,7 @@ app.delete("/admin/deleteUser", (req, res) => {
   res.send("Deleted a user");
 });
 
-// ▶ Enables Express to handle JSON request bodies
+//💥 Enables Express to handle JSON request bodies
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
@@ -110,6 +110,32 @@ app.post("/signup", async (req, res) => {
 
     await user.save();
     res.send("User added successfully");
+  } catch (err) {
+    res.status(400).send("ERROR : " + err.message);
+  }
+});
+
+//💥 Checking emailId and password are valid
+app.post("/login", async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+
+    if (!validator.isEmail(emailId)) {
+      throw new Error("Email not valid");
+    }
+
+    const user = await User.findOne({ emailId: emailId });
+    if (!user) {
+      throw new Error("EmailId not present in DB");
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
+      res.send("Login Successfully");
+    } else {
+      throw new Error("Password is not correct");
+    }
   } catch (err) {
     res.status(400).send("ERROR : " + err.message);
   }
