@@ -18,6 +18,8 @@ const bcrypt = require("bcrypt");
 
 const cookieParser = require("cookie-parser");
 
+const jwt = require("jsonwebtoken");
+
 const app = express();
 
 const PORT = 3000;
@@ -92,6 +94,8 @@ app.delete("/admin/deleteUser", (req, res) => {
 
 //💥 Enables Express to handle JSON request bodies
 app.use(express.json());
+
+//💥 It's an middleware to read req.cookies
 app.use(cookieParser());
 
 //💥 Regestiering new User
@@ -136,7 +140,10 @@ app.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      res.cookie("token", "abc123");
+      const token = await jwt.sign({ _id: user._id }, "Dev@MyApp#0506");
+      console.log(token);
+
+      res.cookie("token", token);
       res.send("Login Successfully");
     } else {
       throw new Error("Invalid credentials");
@@ -165,10 +172,28 @@ app.get("/user", async (req, res) => {
 
 //💥 Reading cookies and validating tokens
 app.get("/profile", async (req, res) => {
-  const cookies = req.cookies;
-  console.log(cookies);
+  try {
+    const cookies = req.cookies;
 
-  res.send("Reading cookies");
+    const { token } = cookies;
+    if (!token) {
+      throw new Error("Invalid Token");
+    }
+
+    const decodedMsg = await jwt.verify(token, "Dev@MyApp#0506");
+
+    const { _id } = decodedMsg;
+    console.log("Logged In user is: " + _id);
+
+    const user = await User.find({ _id });
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    res.send(user);
+  } catch (error) {
+    res.status(400).send("ERROR : " + error.message);
+  }
 });
 
 //💥 API will return all the users from DB
