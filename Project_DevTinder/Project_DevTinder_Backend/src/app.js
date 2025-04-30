@@ -185,10 +185,10 @@ app.get("/profile", async (req, res) => {
     const { _id } = decodedMsg;
     console.log("Logged In user is: " + _id);
 
-    const user = await User.find({ _id });
+    const user = await User.findOne({ _id });
     if (!user) {
       throw new Error("User does not exist");
-    }
+    }e
 
     res.send(user);
   } catch (error) {
