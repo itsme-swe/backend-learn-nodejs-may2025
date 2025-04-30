@@ -106,7 +106,6 @@ app.post("/signup", async (req, res) => {
     const { firstName, lastName, emailId, password } = req.body;
 
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
 
     // Creating new instance of the User model
     const user = new User({
@@ -141,7 +140,6 @@ app.post("/login", async (req, res) => {
 
     if (isPasswordValid) {
       const token = await jwt.sign({ _id: user._id }, "Dev@MyApp#0506");
-      console.log(token);
 
       res.cookie("token", token);
       res.send("Login Successfully");
@@ -183,12 +181,11 @@ app.get("/profile", async (req, res) => {
     const decodedMsg = await jwt.verify(token, "Dev@MyApp#0506");
 
     const { _id } = decodedMsg;
-    console.log("Logged In user is: " + _id);
 
     const user = await User.findOne({ _id });
     if (!user) {
       throw new Error("User does not exist");
-    }e
+    }
 
     res.send(user);
   } catch (error) {
