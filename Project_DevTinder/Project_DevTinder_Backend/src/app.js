@@ -16,6 +16,8 @@ const { validateSignUpData } = require("./utils/validation");
 
 const bcrypt = require("bcrypt");
 
+const cookieParser = require("cookie-parser");
+
 const app = express();
 
 const PORT = 3000;
@@ -90,6 +92,7 @@ app.delete("/admin/deleteUser", (req, res) => {
 
 //💥 Enables Express to handle JSON request bodies
 app.use(express.json());
+app.use(cookieParser());
 
 //💥 Regestiering new User
 app.post("/signup", async (req, res) => {
@@ -133,6 +136,7 @@ app.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
+      res.cookie("token", "abc123");
       res.send("Login Successfully");
     } else {
       throw new Error("Invalid credentials");
@@ -157,6 +161,14 @@ app.get("/user", async (req, res) => {
   } catch (err) {
     res.status(400).send("Something went wrong" + err.message);
   }
+});
+
+//💥 Reading cookies and validating tokens
+app.get("/profile", async (req, res) => {
+  const cookies = req.cookies;
+  console.log(cookies);
+
+  res.send("Reading cookies");
 });
 
 //💥 API will return all the users from DB
