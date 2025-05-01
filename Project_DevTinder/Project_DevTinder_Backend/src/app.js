@@ -20,6 +20,8 @@ const cookieParser = require("cookie-parser");
 
 const jwt = require("jsonwebtoken");
 
+const { userAuth } = require("./middlewares/auth");
+
 const app = express();
 
 const PORT = 3000;
@@ -169,23 +171,9 @@ app.get("/user", async (req, res) => {
 });
 
 //💥 Reading cookies and validating tokens
-app.get("/profile", async (req, res) => {
+app.get("/profile", userAuth, async (req, res) => {
   try {
-    const cookies = req.cookies;
-
-    const { token } = cookies;
-    if (!token) {
-      throw new Error("Invalid Token");
-    }
-
-    const decodedMsg = await jwt.verify(token, "Dev@MyApp#0506");
-
-    const { _id } = decodedMsg;
-
-    const user = await User.findOne({ _id });
-    if (!user) {
-      throw new Error("User does not exist");
-    }
+    const user = req.user;
 
     res.send(user);
   } catch (error) {
