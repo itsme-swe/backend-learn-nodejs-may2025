@@ -141,9 +141,13 @@ app.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      const token = await jwt.sign({ _id: user._id }, "Dev@MyApp#0506");
+      const token = await jwt.sign({ _id: user._id }, "Dev@MyApp#0506", {
+        expiresIn: "1d",
+      });
 
-      res.cookie("token", token);
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 8 * 3600000),
+      });
       res.send("Login Successfully");
     } else {
       throw new Error("Invalid credentials");
@@ -179,6 +183,14 @@ app.get("/profile", userAuth, async (req, res) => {
   } catch (error) {
     res.status(400).send("ERROR : " + error.message);
   }
+});
+
+app.post("/sendConnectionReq", userAuth, async (req, res) => {
+  const user = req.user;
+
+  console.log("Sending a connection request");
+
+  res.send(`${user.firstName} sent the connection request!!`);
 });
 
 //💥 API will return all the users from DB
