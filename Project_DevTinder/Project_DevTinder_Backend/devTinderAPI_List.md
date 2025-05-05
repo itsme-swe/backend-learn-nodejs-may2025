@@ -1,8 +1,12 @@
 # API's needed for Project DevTinder
 
+### authRouter
+
 - POST / signup
 - POST / login
 - POST / logout
+
+### profileRouter
 
 - GET / profile / view
 - PATCH / profile/ edit
@@ -15,11 +19,13 @@
 💥 **accepted** (Status of req. sent)
 💥 **rejected** (Status of req. sent)
 
+### connectionReqRouter
+
 - POST / request/send/intrested/:userId
 - POST / request/send/ignore/:userId
 
-- POST / request/review/accepted/:reqId 
-- POST / request/review/rejected/:reqId 
+- POST / request/review/accepted/:reqId
+- POST / request/review/rejected/:reqId
 
 - GET / connections/matches
 - GET / request/received
