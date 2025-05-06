@@ -27,6 +27,7 @@
 - POST / request/review/accepted/:reqId
 - POST / request/review/rejected/:reqId
 
+### userRouter
 - GET / connections/matches
 - GET / request/received
 - GET / feed/core
