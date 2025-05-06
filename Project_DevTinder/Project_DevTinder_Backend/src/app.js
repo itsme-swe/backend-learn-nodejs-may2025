@@ -17,6 +17,12 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 
+//💥 Enables Express to handle JSON request bodies
+app.use(express.json());
+
+//💥 It's an middleware to read req.cookies
+app.use(cookieParser());
+
 //💥 Connecting our app to DB
 connectDB()
   .then(() => {
