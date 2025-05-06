@@ -5,13 +5,17 @@ const express = require("express");
 const { adminAuth } = require("./middlewares/auth");
 const connectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
+
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 
 const app = express();
-
 const PORT = 3000;
+
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
 
 //💥 Enables Express to handle JSON request bodies
 app.use(express.json());
