@@ -1,30 +1,23 @@
-/*
-💥 Now we are creating server using express.js 
- */
+//💥 Now we are creating server using express.js
 
 const express = require("express");
 
 const { adminAuth } = require("./middlewares/auth");
-
 const connectDB = require("./config/database");
-
-const validator = require("validator");
-
-const User = require("./models/user");
-
-const { validateSignUpData } = require("./utils/validation");
-
-const bcrypt = require("bcrypt");
-
 const cookieParser = require("cookie-parser");
-
-const jwt = require("jsonwebtoken");
-
-const { userAuth } = require("./middlewares/auth");
+const authRouter = require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
 
 const app = express();
 
 const PORT = 3000;
+
+//💥 Enables Express to handle JSON request bodies
+app.use(express.json());
+
+//💥 It's an middleware to read req.cookies
+app.use(cookieParser());
 
 //💥 Connecting our app to DB
 connectDB()
@@ -94,69 +87,6 @@ app.delete("/admin/deleteUser", (req, res) => {
   res.send("Deleted a user");
 });
 
-//💥 Enables Express to handle JSON request bodies
-app.use(express.json());
-
-//💥 It's an middleware to read req.cookies
-app.use(cookieParser());
-
-//💥 Regestiering new User
-app.post("/signup", async (req, res) => {
-  try {
-    validateSignUpData(req);
-
-    const { firstName, lastName, emailId, password } = req.body;
-
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    // Creating new instance of the User model
-    const user = new User({
-      firstName,
-      lastName,
-      emailId,
-      password: passwordHash,
-    });
-
-    await user.save();
-    res.send("User added successfully");
-  } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
-  }
-});
-
-//💥 Checking emailId and password are valid
-app.post("/login", async (req, res) => {
-  try {
-    const { emailId, password } = req.body;
-
-    if (!validator.isEmail(emailId)) {
-      throw new Error("Email not valid");
-    }
-
-    const user = await User.findOne({ emailId: emailId });
-    if (!user) {
-      throw new Error("Invalid credentials");
-    }
-
-    //🔸Schema Method
-    const isPasswordValid = await user.validatePassword(password);
-
-    if (isPasswordValid) {
-      //🔸Schema Method
-      const token = await user.getJWT();
-
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 * 3600000),
-      });
-      res.send("Login Successfully");
-    } else {
-      throw new Error("Invalid credentials");
-    }
-  } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
-  }
-});
-
 //💥 API will retrieve the user from DB on the basis of emailId
 app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;
@@ -172,25 +102,6 @@ app.get("/user", async (req, res) => {
   } catch (err) {
     res.status(400).send("Something went wrong" + err.message);
   }
-});
-
-//💥 Reading cookies and validating tokens
-app.get("/profile", userAuth, async (req, res) => {
-  try {
-    const user = req.user;
-
-    res.send(user);
-  } catch (error) {
-    res.status(400).send("ERROR : " + error.message);
-  }
-});
-
-app.post("/sendConnectionReq", userAuth, async (req, res) => {
-  const user = req.user;
-
-  console.log("Sending a connection request");
-
-  res.send(`${user.firstName} sent the connection request!!`);
 });
 
 //💥 API will return all the users from DB
