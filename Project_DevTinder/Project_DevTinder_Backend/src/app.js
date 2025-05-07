@@ -13,15 +13,15 @@ const requestRouter = require("./routes/request");
 const app = express();
 const PORT = 3000;
 
-app.use("/", authRouter);
-app.use("/", profileRouter);
-app.use("/", requestRouter);
-
 //💥 Enables Express to handle JSON request bodies
 app.use(express.json());
 
 //💥 It's an middleware to read req.cookies
 app.use(cookieParser());
+
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
 
 //💥 Connecting our app to DB
 connectDB()
@@ -32,7 +32,7 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.error("Database cannot be connected");
+    console.error(err.message);
   });
 
 //💥 Accessing query parametrs

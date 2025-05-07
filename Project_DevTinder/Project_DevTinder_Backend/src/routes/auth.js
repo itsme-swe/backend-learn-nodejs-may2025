@@ -31,7 +31,7 @@ authRouter.post("/signup", async (req, res) => {
   }
 });
 
-//💥 Checking emailId and password are valid
+//💥 User try to login but only allowing if emailId & password is valid
 authRouter.post("/login", async (req, res) => {
   try {
     const { emailId, password } = req.body;
@@ -61,6 +61,21 @@ authRouter.post("/login", async (req, res) => {
     }
   } catch (err) {
     res.status(400).send("ERROR : " + err.message);
+  }
+});
+
+authRouter.post("/logout", async (req, res) => {
+  try {
+    res.cookie(
+      ("token",
+      null,
+      {
+        expires: new Date(Date.now()),
+      })
+    );
+    res.send("User Logout Successfully");
+  } catch (error) {
+    res.status(401).send(`ERROR : ${err.message}`);
   }
 });
 
