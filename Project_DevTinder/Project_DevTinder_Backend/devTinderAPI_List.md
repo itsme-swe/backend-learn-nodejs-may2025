@@ -10,7 +10,7 @@
 
 - GET / profile / view
 - PATCH / profile/ edit
-- PATCH / profile/ password
+- PATCH / profile/ password // Forgot password API
 
 ### Status when sending req. to some another user
 
@@ -28,6 +28,7 @@
 - POST / request/review/rejected/:reqId
 
 ### userRouter
+
 - GET / connections/matches
 - GET / request/received
 - GET / feed/core
