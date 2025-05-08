@@ -21,10 +21,6 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
   try {
     const updateData = validateEditProfileData(req);
 
-    if (!updateData) {
-      throw new Error("Invalid edit request");
-    }
-
     const loggedInUser = await User.findByIdAndUpdate(
       req.user._id,
       updateData,
