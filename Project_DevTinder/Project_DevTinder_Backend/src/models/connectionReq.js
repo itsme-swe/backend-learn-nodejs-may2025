@@ -6,27 +6,24 @@ const connectionReqSchema = new mongoose.Schema(
   {
     fromUserId: {
       type: mongoose.Schema.Types.ObjectId,
-      require: true,
+      required: true,
     },
     toUserId: {
       type: mongoose.Schema.Types.ObjectId,
-      require: true,
+      required: true,
     },
     status: {
       type: String,
-      require: true,
+      required: true,
       enum: {
-        values: ["ignored", "intrested", "accepted", "rejected"],
-        message: `${VALUE} is incorrect status type`,
+        values: ["ignored", "interested", "accepted", "rejected"],
+        message: `{VALUE} is incorrect status type`,
       },
     },
   },
   { timestamps: true }
 );
 
-const ConnectionReqModel = new mongoose.model(
-  "ConnectionReqModel",
-  connectionReqSchema
-);
+const ConnectionReq = new mongoose.model("ConnectionReq", connectionReqSchema);
 
-module.exports = ConnectionReqModel;
+module.exports = ConnectionReq;
