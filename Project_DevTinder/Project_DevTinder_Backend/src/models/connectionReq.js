@@ -23,3 +23,10 @@ const connectionReqSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const ConnectionReqModel = new mongoose.model(
+  "ConnectionReqModel",
+  connectionReqSchema
+);
+
+module.exports = ConnectionReqModel;
