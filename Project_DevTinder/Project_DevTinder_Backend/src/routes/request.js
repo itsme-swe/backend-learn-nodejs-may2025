@@ -31,6 +31,7 @@ requestRouter.post(
         ],
       });
 
+      // 2️⃣ Checking toUserId is present in DB
       const toUser = await User.findById(toUserId);
       if (!toUser) {
         return res.status(400).json({ message: "User not found!!" });
