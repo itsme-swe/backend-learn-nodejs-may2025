@@ -4,6 +4,7 @@ const requestRouter = express.Router();
 
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionReq");
+const User = require("../models/user");
 
 requestRouter.post(
   "/request/send/:status/:toUserId",
@@ -22,7 +23,7 @@ requestRouter.post(
           .json({ message: "Invalid status type: " + status });
       }
 
-      // Check if a connection request already exists between the two users (in either direction).
+      // 1️⃣ Check if a connection request already exists between the two users (in either direction).
       const existingConnectionReq = await ConnectionRequest.findOne({
         $or: [
           { fromUserId, toUserId },
@@ -30,7 +31,12 @@ requestRouter.post(
         ],
       });
 
-      // If found, return an error response. If not found, `existingConnectionReq` will be null.
+      const toUser = await User.findById(toUserId);
+      if (!toUser) {
+        return res.status(400).json({ message: "User not found!!" });
+      }
+
+      // 3️⃣ If found, return an error response. If not found, `existingConnectionReq` will be null.
       if (existingConnectionReq) {
         return res
           .status(400)
