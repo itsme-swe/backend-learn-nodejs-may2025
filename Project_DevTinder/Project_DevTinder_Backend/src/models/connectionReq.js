@@ -24,6 +24,9 @@ const connectionReqSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Creating Compound Index
+connectionReqSchema.index({ fromUserId: 1, toUserId: 1 });
+
 connectionReqSchema.pre("save", function (next) {
   const ConnectionRequest = this;
 
