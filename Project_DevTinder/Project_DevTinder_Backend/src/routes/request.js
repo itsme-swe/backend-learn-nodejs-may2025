@@ -52,8 +52,16 @@ requestRouter.post(
 
       const data = await connectionReq.save();
 
+      let message = " ";
+
+      if (status === "interested") {
+        message = `${req.user.firstName} is interested in ${toUser.firstName}`;
+      } else if (status === "ignored") {
+        message = `${req.user.firstName} is not interested in ${toUser.firstName}`;
+      }
+
       res.json({
-        message: "Connection request sent successfully",
+        message,
         data,
       });
     } catch (error) {
