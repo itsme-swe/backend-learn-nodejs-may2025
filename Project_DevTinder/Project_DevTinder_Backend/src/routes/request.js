@@ -23,19 +23,19 @@ requestRouter.post(
           .json({ message: "Invalid status type: " + status });
       }
 
-      // 1️⃣ Check if a connection request already exists between the two users (in either direction).
+      // 1️⃣ Checking toUserId is present in DB
+      const toUser = await User.findById(toUserId);
+      if (!toUser) {
+        return res.status(400).json({ message: "User not found!!" });
+      }
+
+      // 2️⃣ Check if a connection request already exists between the two users (in either direction).
       const existingConnectionReq = await ConnectionRequest.findOne({
         $or: [
           { fromUserId, toUserId },
           { fromUserId: toUserId, toUserId: fromUserId },
         ],
       });
-
-      // 2️⃣ Checking toUserId is present in DB
-      const toUser = await User.findById(toUserId);
-      if (!toUser) {
-        return res.status(400).json({ message: "User not found!!" });
-      }
 
       // 3️⃣ If found, return an error response. If not found, `existingConnectionReq` will be null.
       if (existingConnectionReq) {
