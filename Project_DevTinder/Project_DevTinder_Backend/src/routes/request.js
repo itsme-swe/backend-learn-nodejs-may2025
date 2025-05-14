@@ -83,6 +83,7 @@ requestRouter.post(
         return res.status(400).json({ message: "Status is not allowed!" });
       }
 
+      //💥 DB call
       const connectionRequest = await ConnectionRequest.findOne({
         _id: requestId,
         toUserId: loggedInUser._id,
