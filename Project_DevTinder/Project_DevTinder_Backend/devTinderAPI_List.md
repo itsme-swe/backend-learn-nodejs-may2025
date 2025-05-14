@@ -27,6 +27,6 @@
 
 ### userRouter
 
-- GET / connections/matches
-- GET / request/received
+- GET / user/request/received
+- GET / connections/matches 
 - GET / feed/core
