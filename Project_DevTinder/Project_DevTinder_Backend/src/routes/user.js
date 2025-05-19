@@ -64,6 +64,12 @@ userRouter.get("/feed", userAuth, async (req, res) => {
 
     const loggedInUser = req.user;
 
+    const page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+    limit = Math.min(limit, 50); //⇒ limit = limit > 50 ? 50 : limit
+
+    const skip = (page - 1) * limit;
+
     //💥 Find all connection request either (sent + received )
     const connectionRequest = await ConnectionRequest.find({
       $or: [
@@ -85,19 +91,21 @@ userRouter.get("/feed", userAuth, async (req, res) => {
       hideUsersFromFeed.add(req.toUserId).toString();
     });
 
-    console.log(hideUsersFromFeed);
-
     //💥 Now finding all the users who's id is not present inside hideUsersFromFeed array and there id's are not equal to loggedInUser id.
     const users = await User.find({
       $and: [
         { _id: { $nin: Array.from(hideUsersFromFeed) } },
         { _id: { $ne: loggedInUser._id } },
       ],
-    });
+    })
+      .select(USER_SAFE_DATA)
+      .skip(skip)
+      .limit(limit);
 
-    res.json(connectionRequest);
+    res.json({ users });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
+
 module.exports = userRouter;
