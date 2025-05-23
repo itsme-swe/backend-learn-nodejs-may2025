@@ -6,4 +6,5 @@
 - Remove unecessary code
 - Install tailwindcss
 - Along with tailwind we'll be using daisyUI
-- Using daisyUi we first set our **nav bar** and **bg color to 300**
+- Install daisyUi
+- Now after installing daisyUi copy code of **nav bar** from daisyUi and paste it in **App.jsx** and inside nav-bar code base set **bg color to 300**
