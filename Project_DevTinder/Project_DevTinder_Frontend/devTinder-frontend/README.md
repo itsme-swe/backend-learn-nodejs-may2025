@@ -11,3 +11,6 @@
 - Use ' **rafce** ' shorthand code snippet to generate a boilerplate for a functional component with export. [ **React Arrow Function Component Export** ]
 - Create a **NavBar.jsx** seprate component file
 - Install React Router for creating the routes. Use command -- **npm install react-router-dom**
+- Create BrowserRouter > Routes > Route= /Body> > RouteChildren
+- Create Outlet component in body component
+- Create the Footer
