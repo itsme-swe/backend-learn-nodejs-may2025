@@ -10,10 +10,14 @@ function Login() {
   //💥 Function will handle login network call
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/login", {
-        emailId,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:3000/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
     } catch (err) {
       console.error(err);
     }

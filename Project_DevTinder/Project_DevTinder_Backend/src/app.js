@@ -5,6 +5,7 @@ const express = require("express");
 const { adminAuth } = require("./middlewares/auth");
 const connectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
@@ -14,6 +15,12 @@ const userRouter = require("./routes/user");
 const app = express();
 const PORT = 3000;
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 //💥 Enables Express to handle JSON request bodies
 app.use(express.json());
 
