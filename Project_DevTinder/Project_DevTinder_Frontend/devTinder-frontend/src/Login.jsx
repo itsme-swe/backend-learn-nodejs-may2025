@@ -1,11 +1,13 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "./utils/userSlice";
 
 function Login() {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   //💥 Function will handle login network call
   const handleLogin = async () => {
@@ -18,6 +20,7 @@ function Login() {
         },
         { withCredentials: true }
       );
+      dispatch(addUser(res.data));  // adding user to redux store inside 
     } catch (err) {
       console.error(err);
     }

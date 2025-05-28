@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Body from "./Body";
 import Login from "./Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
