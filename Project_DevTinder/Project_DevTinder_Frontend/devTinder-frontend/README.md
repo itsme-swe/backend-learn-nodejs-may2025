@@ -18,5 +18,6 @@
 - Install axios for API calls instead of fetch
 - CORS ⇨ Install **CORS** in backend ⇨ add middleware to the configuration: origin, credentials: true
 - Whenever we're making an API call using **axios** ⇨ { withCredentials: true } -- If we do not pass this property server will not send back the tokens to browser.
+- Install redux-toolkit ⇨ [MustReadAbout_redux-tookit](https://redux-toolkit.js.org/tutorials/quick-start)
 
 - Creating login page
