@@ -19,5 +19,8 @@
 - CORS ⇨ Install **CORS** in backend ⇨ add middleware to the configuration: origin, credentials: true
 - Whenever we're making an API call using **axios** ⇨ { withCredentials: true } -- If we do not pass this property server will not send back the tokens to browser.
 - Install redux-toolkit ⇨ [MustReadAbout_redux-tookit](https://redux-toolkit.js.org/tutorials/quick-start)
+- Create redux-store inside the folder utils by the file_Name **appStore.jsx** ⇒ src / utils / appStore.jsx
+- After creating store provide it to the application. Means wrap the whole code of root file **App.jsx** inside the component **< Provider store={appStore} > </ Provider>**. But first,
+**import {Provider} from "react-redux"**
 
 - Creating login page
