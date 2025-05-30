@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Body from "./components/Body";
 import Login from "./components/Login";
 import Feed from "./components/Feed";

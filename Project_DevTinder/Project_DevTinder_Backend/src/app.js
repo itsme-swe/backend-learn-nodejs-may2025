@@ -2,7 +2,6 @@
 
 const express = require("express");
 
-const { adminAuth } = require("./middlewares/auth");
 const connectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -88,9 +87,6 @@ app.get(
     res.send("2nd Handler responding");
   }
 );
-
-//💥 Writing Middleware for all GET, POST, DELETE,.... requests
-app.use("/admin", adminAuth);
 
 app.get("/admin/getAllData", (req, res) => {
   res.send("All Data sent");
