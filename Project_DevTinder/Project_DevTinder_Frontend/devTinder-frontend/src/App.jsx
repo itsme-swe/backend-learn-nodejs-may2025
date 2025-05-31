@@ -21,7 +21,7 @@ function App() {
         </BrowserRouter>
       </Provider>
 
-      <h1 class="text-3xl font-bold"></h1>
+      <h1 className="text-3xl font-bold"></h1>
     </>
   );
 }
