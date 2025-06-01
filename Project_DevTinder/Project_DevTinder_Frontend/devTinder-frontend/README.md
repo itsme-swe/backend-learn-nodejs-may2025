@@ -31,5 +31,5 @@
 - Get the feed and add feed in the redux store
 - Build the UserCard on feed page
 - Build EditProfile page -- Create another component **EditProfile.jsx**
-
+- Build functionality for notification or toast after editing the profile by using DaisyUI inside **EditProfile.jsx**
 - Creating login page

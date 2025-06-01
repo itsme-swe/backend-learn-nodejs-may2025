@@ -15,10 +15,12 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user.gender);
   const [bio, setBio] = useState(user.bio);
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
 
   //💥 This is how our frontend communicate with our server -- API call
   const saveProfile = async () => {
+    setError("");
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
@@ -28,8 +30,13 @@ const EditProfile = ({ user }) => {
         }
       );
       dispatch(addUser(res?.data?.data));
+      setShowToast(true);
+      
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
     } catch (err) {
-      setError(err.message);
+      setError(err.response.data);
     }
   };
 
@@ -131,6 +138,14 @@ const EditProfile = ({ user }) => {
       </div>
 
       <UserCard user={{ firstName, lastName, age, gender, bio, photoUrl }} />
+
+      {showToast && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <span>Profile Saved Successfully!</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
