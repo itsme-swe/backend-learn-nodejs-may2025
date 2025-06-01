@@ -21,7 +21,15 @@
 - Install redux-toolkit ⇨ [MustReadAbout_redux-tookit](https://redux-toolkit.js.org/tutorials/quick-start)
 - Create redux-store inside the folder utils by the file_Name **appStore.jsx** ⇒ src / utils / appStore.jsx
 - After creating store provide it to the application. Means wrap the whole code of root file **App.jsx** inside the component **< Provider store={appStore} > </ Provider>**. But first, **import {Provider} from "react-redux"**
-- 
+- Addd redux devtool extension on chrome
+- Login and see if the data is coming properly in redux store
+- NavBar should update as soon as the user logs in.
+- Refactor the code to add constants file + create components folder
+- We need to write the logic for if user is not loged in, the user cannot access other routes
+- If token is not present redirect user to login page
+- Build logout feature
+- Get the feed and add feed in the redux store
+- Build the UserCard on feed page
 
 
 - Creating login page
