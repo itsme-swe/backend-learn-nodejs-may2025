@@ -33,3 +33,4 @@
 - Build EditProfile page -- Create another component **EditProfile.jsx**
 - Build functionality for notification or toast after editing the profile by using DaisyUI inside **EditProfile.jsx**
 - Creating login page
+- Create all connection page --- where i can see my all connections
