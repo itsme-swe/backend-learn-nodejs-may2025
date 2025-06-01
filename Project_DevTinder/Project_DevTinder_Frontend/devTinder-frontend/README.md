@@ -30,6 +30,6 @@
 - Build logout feature
 - Get the feed and add feed in the redux store
 - Build the UserCard on feed page
-
+- Build EditProfile page -- Create another component **EditProfile.jsx**
 
 - Creating login page

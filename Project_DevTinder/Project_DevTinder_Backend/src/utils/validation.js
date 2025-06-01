@@ -14,7 +14,16 @@ const validateSignUpData = (req) => {
 
 const validateEditProfileData = (req) => {
   const data = req.body;
-  const allowedEditMethods = ["firstName", "age", "emailId", "bio", "skills"];
+  const allowedEditMethods = [
+    "firstName",
+    "lastName",
+    "age",
+    "gender",
+    "emailId",
+    "bio",
+    "skills",
+    "photoUrl",
+  ];
 
   const isEditAllowed = Object.keys(data).every((field) =>
     allowedEditMethods.includes(field)
@@ -23,8 +32,9 @@ const validateEditProfileData = (req) => {
     throw new Error("Update not allowed");
   }
 
-  if (data?.skills.length > 4) {
-    throw new Error("Can only add upto 4 skills");
+  // This line protects your code by only accessing .length if skills is a valid array — avoiding crashes when skills is missing or invalid.
+  if (Array.isArray(data.skills) && data.skills.length > 6) {
+    throw new Error("Can only add upto 6 skills");
   }
 
   const updateData = {};
