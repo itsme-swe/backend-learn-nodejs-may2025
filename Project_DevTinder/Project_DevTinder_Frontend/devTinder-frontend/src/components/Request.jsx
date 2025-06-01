@@ -1,41 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from "axios";
+
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnections } from "../utils/connectionSlice";
+import { addRequests } from "../utils/requestSlice";
 
-const Connections = () => {
-  const connections = useSelector((store) => store.connections);
+const Requests = () => {
+  const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
-
-  const fetchConnections = async () => {
+  const fetchRequests = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/connections/matches", {
+      const res = await axios.get(BASE_URL + "/user/request/received", {
         withCredentials: true,
       });
-      console.log(res.data.data);
-      dispatch(addConnections(res.data.data));
+
+      dispatch(addRequests(res.data.data));
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
-    fetchConnections();
+    fetchRequests();
   }, []);
 
-  if (!connections) return;
+  if (!requests) return;
 
-  if (connections.length === 0) return <h1>No Connections Found</h1>;
+  if (requests.length === 0) return <h1>No Request Found</h1>;
 
   return (
     <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connections</h1>
+      <h1 className="text-bold text-white text-3xl">Connection Request</h1>
 
-      {connections.map((connection) => {
+      {requests.map((request) => {
         const { _id, firstName, lastName, photoUrl, gender, age, bio } =
-          connection;
+          request.fromUserId;
         return (
           <div
             key={_id}
@@ -62,4 +62,4 @@ const Connections = () => {
   );
 };
 
-export default Connections;
+export default Requests;
