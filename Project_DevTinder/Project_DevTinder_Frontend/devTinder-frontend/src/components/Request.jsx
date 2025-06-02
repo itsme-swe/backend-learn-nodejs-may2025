@@ -39,7 +39,7 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className="flex m-4, p-4  rounded-lg bg-base-300 w-1/2 mx-auto"
+            className="flex justify-between items-center p-4  rounded-lg bg-base-300 w-2/3 mx-auto my-2"
           >
             <div>
               <img
@@ -54,6 +54,15 @@ const Requests = () => {
               </h2>
               {age && gender && <p>{age + " , " + gender}</p>}
               <p>{bio}</p>
+            </div>
+
+            <div>
+              <button className="btn btn-active btn-primary mx-2">
+                Accept
+              </button>
+              <button className="btn btn-active btn-secondary mx-2">
+                Reject
+              </button>
             </div>
           </div>
         );

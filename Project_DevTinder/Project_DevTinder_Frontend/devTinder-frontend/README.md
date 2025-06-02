@@ -34,3 +34,4 @@
 - Build functionality for notification or toast after editing the profile by using DaisyUI inside **EditProfile.jsx**
 - Creating login page
 - Create all connection page --- where i can see my all connections of logged in user
+- Create page for all the requests received by other users -- and buttons either to **accept** or **reject** the request.
