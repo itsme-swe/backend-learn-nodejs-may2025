@@ -110,7 +110,7 @@ function Login() {
             <fieldset className="fieldset w-full max-w-xs my-2">
               <legend className="fieldset-legend">Password</legend>
               <input
-                type="text"
+                type="password"
                 value={password}
                 className="input
                 input-bordered
