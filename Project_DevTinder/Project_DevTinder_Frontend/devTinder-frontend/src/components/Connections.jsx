@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
@@ -39,7 +40,7 @@ const Connections = () => {
         return (
           <div
             key={_id}
-            className="flex m-4, p-4  rounded-lg bg-base-300 w-1/2 mx-auto"
+            className="flex m-4, p-4  rounded-lg bg-base-300 w-1/2 mx-auto my-2"
           >
             <div>
               <img
