@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { useState } from "react";
 import UserCard from "./UserCard";
@@ -11,9 +10,9 @@ const EditProfile = ({ user }) => {
   //💥 Local variables
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
-  const [age, setAge] = useState(user.age);
-  const [gender, setGender] = useState(user.gender);
-  const [bio, setBio] = useState(user.bio);
+  const [age, setAge] = useState(user.age || "");
+  const [gender, setGender] = useState(user.gender || "");
+  const [bio, setBio] = useState(user.bio || "");
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const EditProfile = ({ user }) => {
       );
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
-      
+
       setTimeout(() => {
         setShowToast(false);
       }, 3000);
