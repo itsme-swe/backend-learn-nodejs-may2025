@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
 
 const feedSlice = createSlice({
@@ -6,9 +5,12 @@ const feedSlice = createSlice({
   initialState: null,
   reducers: {
     addFeed: (state, action) => action.payload,
-    removeFeed: (state, action) => null,
+    removeUserFromFeed: (state, action) => {
+      const newFeed = state.filter((user) => user.action !== action.payload);
+      return newFeed;
+    },
   },
 });
 
-export const { addFeed } = feedSlice.actions;
+export const { addFeed, removeUserFromFeed } = feedSlice.actions;
 export default feedSlice.reducer;
